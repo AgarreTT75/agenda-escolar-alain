@@ -9,36 +9,58 @@
   <link rel="icon" href="assets/favicon.png" />
   <style>
     :root { --primary:#4a90e2; --bg:#f9fafc; --ink:#222; --muted:#556; }
-    *{ box-sizing:border-box } body{ margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; background:var(--bg); color:var(--ink) }
+    *{ box-sizing:border-box }
+    body{ margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; background:var(--bg); color:var(--ink) }
     header{ position:sticky; top:0; z-index:10; background:var(--primary); color:#fff; text-align:center; padding:1rem; font-size:1.15rem; font-weight:700 }
     nav{ display:grid; grid-template-columns: repeat(4,1fr); gap:.5rem; padding:.5rem; background:#eef1f6; position:sticky; top:56px; z-index:9 }
     nav button{ padding:.7rem .5rem; border:none; border-radius:12px; background:var(--primary); color:#fff; font-size:1rem }
     nav button[aria-current="page"]{ outline:2px solid #fff; box-shadow:0 0 0 2px rgba(0,0,0,.08) inset }
-    main{ padding:1rem } section{ display:none } section.active{ display:block }
+    main{ padding:1rem }
+    section{ display:none }
+    section.active{ display:block }
     h2{ margin:.2rem 0 .8rem; color:var(--primary); font-size:1.1rem; display:flex; align-items:center; justify-content:space-between }
     .card{ background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.06); padding:1rem; margin:.6rem 0 }
-    .table-wrap{ overflow-x:auto } table{ width:100%; border-collapse:collapse; min-width:760px }
-    th,td{ border:1px solid #e6e9ef; padding:.6rem .5rem; text-align:left; vertical-align:top } th{ background:#f3f6fb; color:#223; font-weight:700 }
-    tbody tr:nth-child(even) td{ background:#fbfcfe } .hour{ white-space:nowrap; font-weight:600; color:#334 }
+    .table-wrap{ overflow-x:auto }
+    table{ width:100%; border-collapse:collapse; min-width:760px }
+    th,td{ border:1px solid #e6e9ef; padding:.6rem .5rem; text-align:left; vertical-align:top }
+    th{ background:#f3f6fb; color:#223; font-weight:700 }
+    tbody tr:nth-child(even) td{ background:#fbfcfe }
+    .hour{ white-space:nowrap; font-weight:600; color:#334 }
     .pill{ display:inline-block; padding:.2rem .5rem; border-radius:999px; background:#eef; font-size:.85rem; margin-left:.4rem }
-    .muted{ color:var(--muted); font-size:.9rem } .kanban{ display:flex; gap:.75rem; overflow-x:auto; padding-bottom:.5rem }
-    .col{ flex:1 0 220px; background:#f1f3f7; border-radius:12px; padding:.5rem } .col h3{ margin:.25rem .5rem; font-size:1rem; color:#334 }
+    .muted{ color:var(--muted); font-size:.9rem }
+    .kanban{ display:flex; gap:.75rem; overflow-x:auto; padding-bottom:.5rem }
+    .col{ flex:1 0 230px; background:#f1f3f7; border-radius:12px; padding:.5rem }
+    .col h3{ margin:.25rem .5rem; font-size:1rem; color:#334; display:flex; align-items:center; justify-content:space-between }
     .note{ background:#fff3cd; padding:.6rem .8rem; border-left:6px solid #ffc107; border-radius:8px; margin:.5rem 0 }
     footer{ padding:1rem; text-align:center; color:#667; font-size:.85rem }
-    .toolbar{ display:flex; gap:.5rem; flex-wrap:wrap } .toolbar button,.toolbar label.btn{ background:var(--primary); color:#fff; border:none; border-radius:10px; padding:.5rem .75rem; cursor:pointer }
+
+    /* Deberes */
+    .toolbar{ display:flex; gap:.5rem; flex-wrap:wrap }
+    .toolbar button, .toolbar label.btn{ background:var(--primary); color:#fff; border:none; border-radius:10px; padding:.5rem .75rem; cursor:pointer }
     .toolbar input[type="file"]{ display:none }
     dialog{ width:min(560px,92vw); border:none; border-radius:16px; padding:0; box-shadow:0 12px 40px rgba(0,0,0,.25) }
     .dlg-head{ background:var(--primary); color:#fff; padding:1rem; border-radius:16px 16px 0 0; font-weight:700 }
-    .dlg-body{ padding:1rem; display:grid; gap:.75rem } .field{ display:grid; gap:.35rem }
-    input[type="text"],input[type="date"]{ width:100%; padding:.7rem .8rem; border-radius:10px; border:1px solid #d9deea }
+    .dlg-body{ padding:1rem; display:grid; gap:.75rem }
+    .field{ display:grid; gap:.35rem }
+    input[type="text"], input[type="date"], select, textarea{ width:100%; padding:.7rem .8rem; border-radius:10px; border:1px solid #d9deea }
     .dlg-actions{ display:flex; justify-content:flex-end; gap:.5rem; padding:1rem }
-    .btn{ border:none; border-radius:10px; padding:.6rem .9rem } .btn.secondary{ background:#eef1f6; color:#223 } .btn.primary{ background:var(--primary); color:#fff }
-    .task-row{ display:flex; align-items:center; gap:.6rem } .task-row label{ flex:1 } .ghost{ opacity:.55 } .small{ font-size:.85rem; color:#667 }
+    .btn{ border:none; border-radius:10px; padding:.6rem .9rem }
+    .btn.secondary{ background:#eef1f6; color:#223 }
+    .btn.primary{ background:var(--primary); color:#fff }
+    .task-row{ display:flex; align-items:center; gap:.6rem }
+    .task-row label{ flex:1 }
+    .ghost{ opacity:.55 }
+    .small{ font-size:.85rem; color:#667 }
     .chip{ display:inline-block; padding:.15rem .45rem; border-radius:999px; background:#e9f1ff; font-size:.78rem; margin-left:.4rem; color:#fff }
-    .actions{ display:flex; gap:.4rem } .icon-btn{ background:transparent; border:none; padding:.25rem .4rem; cursor:pointer }
+    .actions{ display:flex; gap:.4rem }
+    .icon-btn{ background:transparent; border:none; padding:.25rem .4rem; cursor:pointer }
+
+    .note-card{ display:flex; gap:.6rem; align-items:flex-start }
+    .add-mini{ background:#4a90e2; color:#fff; border:none; border-radius:10px; padding:.3rem .5rem; font-size:.85rem; }
   </style>
 
   <script>
+    /* ---------- Navegación SPA ---------- */
     function showSection(id){
       document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
@@ -46,6 +68,7 @@
       document.querySelector(`nav button[data-target="${id}"]`).setAttribute('aria-current','page');
     }
 
+    /* ---------- Deberes (localStorage + colores + export/import) ---------- */
     const STORE_KEY='agenda.deberes.v1';
     function loadTasks(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY))||[] }catch(e){ return [] } }
     function saveTasks(a){ localStorage.setItem(STORE_KEY, JSON.stringify(a)) }
@@ -64,7 +87,7 @@
       'geografia':'#84cc16','geografía e historia':'#84cc16','geografia e historia':'#84cc16',
       'salud':'#f97316'
     };
-    // 🔧 FIX: quitar acentos sin usar \p{Diacritic}
+    // FIX universal: quitar tildes sin usar \p{Diacritic}
     function norm(s){
       return (s||'')
         .toLowerCase()
@@ -77,7 +100,8 @@
       if(SUBJECT_COLORS[n]) return SUBJECT_COLORS[n];
       for(const k of Object.keys(SUBJECT_COLORS)) if(n.startsWith(k)) return SUBJECT_COLORS[k];
       const pal=['#0ea5e9','#f43f5e','#22c55e','#eab308','#8b5cf6','#06b6d4','#84cc16','#f97316','#14b8a6'];
-      let h=0; for(let i=0;i<n.length;i++){ h=((h<<5)-h)+n.charCodeAt(i); h|=0; } return pal[Math.abs(h)%pal.length];
+      let h=0; for(let i=0;i<n.length;i++){ h=((h<<5)-h)+n.charCodeAt(i); h|=0; }
+      return pal[Math.abs(h)%pal.length];
     }
 
     function rowHTML(t,i){
@@ -103,7 +127,7 @@
       });
       list.querySelectorAll('.del').forEach(btn=>{
         btn.addEventListener('click',e=>{
-          const idx=+e.target.dataset.idx; const data=loadTasks(); data.splice(idx,1); saveTasks(data); renderTasks();
+          const idx=+e.currentTarget.dataset.idx; const data=loadTasks(); data.splice(idx,1); saveTasks(data); renderTasks();
         });
       });
     }
@@ -132,22 +156,97 @@
       r.readAsText(file);
     }
 
-    document.addEventListener('DOMContentLoaded',()=>{
-      document.querySelectorAll('nav button').forEach(b=> b.addEventListener('click',()=> showSection(b.dataset.target)));
+    /* ---------- Proyectos (kanban simple add/delete) ---------- */
+    const PROJ_KEY='agenda.proyectos.v1';
+    function loadProjects(){ try{ return JSON.parse(localStorage.getItem(PROJ_KEY)) || {todo:['📊 Trabajo de Ciencias','🎭 Teatro escolar'], doing:['📘 Proyecto de Historia'], done:['🎨 Lámina de Plástica']}; }catch(e){ return {todo:[],doing:[],done:[]}; } }
+    function saveProjects(p){ localStorage.setItem(PROJ_KEY, JSON.stringify(p)); }
+    function renderProjects(){
+      const p=loadProjects();
+      const mk=(arr,zone)=> arr.map((t,i)=>`
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:.5rem;">
+            <span>${t}</span>
+            <button class="icon-btn" data-zone="${zone}" data-idx="${i}" title="Eliminar">🗑️</button>
+          </div>
+        </div>`).join('') || '<p class="muted" style="padding:.5rem 0 .2rem .5rem;">Vacío</p>';
+      document.getElementById('proj-todo').innerHTML = mk(p.todo,'todo');
+      document.getElementById('proj-doing').innerHTML = mk(p.doing,'doing');
+      document.getElementById('proj-done').innerHTML = mk(p.done,'done');
+      document.querySelectorAll('#proyectos .icon-btn').forEach(btn=>{
+        btn.addEventListener('click',e=>{
+          const z=e.currentTarget.dataset.zone; const i=+e.currentTarget.dataset.idx;
+          const d=loadProjects(); d[z].splice(i,1); saveProjects(d); renderProjects();
+        });
+      });
+    }
+    function addProjectInline(zone){
+      const text=prompt('Nombre del proyecto:'); if(!text) return;
+      const d=loadProjects(); d[zone].push(text.slice(0,120)); saveProjects(d); renderProjects();
+    }
+
+    /* ---------- Notas rápidas ---------- */
+    const NOTES_KEY='agenda.notas.v1';
+    function loadNotes(){ try{ return JSON.parse(localStorage.getItem(NOTES_KEY)) || ['➗ Examen de mates el viernes','👟 Traer chándal el lunes','📘 Entregar libro de lectura el martes']; }catch(e){ return []; } }
+    function saveNotes(n){ localStorage.setItem(NOTES_KEY, JSON.stringify(n)); }
+    function renderNotes(){
+      const n=loadNotes(); const wrap=document.getElementById('notesWrap');
+      if(!n.length){ wrap.innerHTML='<p class="muted">Sin notas. Pulsa ➕ para añadir.</p>'; return; }
+      wrap.innerHTML=n.map((t,i)=>`
+        <div class="note note-card">
+          <div style="flex:1">${t}</div>
+          <button class="icon-btn" data-idx="${i}" title="Eliminar">🗑️</button>
+        </div>`).join('');
+      wrap.querySelectorAll('.icon-btn').forEach(b=>{
+        b.addEventListener('click',e=>{
+          const idx=+e.currentTarget.dataset.idx; const d=loadNotes(); d.splice(idx,1); saveNotes(d); renderNotes();
+        });
+      });
+    }
+    function addNote(){
+      const text=prompt('Escribe la nota:'); if(!text) return;
+      const n=loadNotes(); n.push(text.slice(0,240)); saveNotes(n); renderNotes();
+    }
+
+    /* ---------- Init ---------- */
+    document.addEventListener('DOMContentLoaded', ()=>{
+      // SPA nav
+      document.querySelectorAll('nav button').forEach(b=> b.addEventListener('click', ()=> showSection(b.dataset.target)));
       showSection('horario');
+
+      // PWA
       if('serviceWorker' in navigator){ navigator.serviceWorker.register('./sw.js').catch(()=>{}); }
+
+      // Deberes
       renderTasks();
-      document.getElementById('btnNew').addEventListener('click',()=> document.getElementById('dlgNew').showModal());
-      document.getElementById('btnCreate').addEventListener('click',addTaskFromForm);
-      document.getElementById('btnCancel').addEventListener('click',()=> document.getElementById('dlgNew').close());
-      document.getElementById('btnExport').addEventListener('click',exportTasks);
-      document.getElementById('fileImport').addEventListener('change',e=> importTasksFromFile(e.target.files[0]));
-      document.getElementById('btnImport').addEventListener('click',()=> document.getElementById('fileImport').click());
+      const btnNew=document.getElementById('btnNew');
+      if(btnNew){ btnNew.addEventListener('click', ()=> document.getElementById('dlgNew').showModal()); }
+      const btnCreate=document.getElementById('btnCreate');
+      if(btnCreate){ btnCreate.addEventListener('click', addTaskFromForm); }
+      const btnCancel=document.getElementById('btnCancel');
+      if(btnCancel){ btnCancel.addEventListener('click', ()=> document.getElementById('dlgNew').close()); }
+      const btnExport=document.getElementById('btnExport');
+      if(btnExport){ btnExport.addEventListener('click', exportTasks); }
+      const fileImport=document.getElementById('fileImport');
+      if(fileImport){ fileImport.addEventListener('change', e=> importTasksFromFile(e.target.files[0])); }
+      const btnImport=document.getElementById('btnImport');
+      if(btnImport){ btnImport.addEventListener('click', ()=> fileImport && fileImport.click()); }
+
+      // Proyectos + Notas
+      renderProjects(); renderNotes();
+      const btnAddTodo=document.getElementById('btnAddTodo');
+      if(btnAddTodo) btnAddTodo.addEventListener('click', ()=> addProjectInline('todo'));
+      const btnAddDoing=document.getElementById('btnAddDoing');
+      if(btnAddDoing) btnAddDoing.addEventListener('click', ()=> addProjectInline('doing'));
+      const btnAddDone=document.getElementById('btnAddDone');
+      if(btnAddDone) btnAddDone.addEventListener('click', ()=> addProjectInline('done'));
+      const btnAddNote=document.getElementById('btnAddNote');
+      if(btnAddNote) btnAddNote.addEventListener('click', addNote);
     });
   </script>
 </head>
 <body>
   <header>📚 Agenda de Alain</header>
+
   <nav>
     <button data-target="horario" aria-current="page">📅 Horario</button>
     <button data-target="deberes">📝 Deberes</button>
@@ -156,63 +255,140 @@
   </nav>
 
   <main>
+    <!-- HORARIO -->
     <section id="horario" class="active">
       <h2>📅 Horario Semanal (2ºB)</h2>
       <div class="card table-wrap">
         <table>
-          <thead><tr><th>Hora</th><th>Lunes</th><th>Martes</th><th>Miércoles</th><th>Jueves</th><th>Viernes</th></tr></thead>
+          <thead>
+            <tr>
+              <th>Hora</th>
+              <th>Lunes</th>
+              <th>Martes</th>
+              <th>Miércoles</th>
+              <th>Jueves</th>
+              <th>Viernes</th>
+            </tr>
+          </thead>
           <tbody>
-            <tr><td class="hour">8:30 – 9:25</td><td>🏃‍♂️ Educación Física <span class="muted">(Noelia)</span></td><td>🌐 Euskera <span class="muted">(Iñigo)</span></td><td>🏃‍♀️ Educación Física <span class="muted">(Noelia)</span></td><td>🧠 Salud Física y Emociones <span class="muted">(Noelia/Leire · P. Crítico)</span></td><td>✍️ Lengua <span class="muted">(Mª Carmen)</span></td></tr>
-            <tr><td class="hour">9:25 – 10:20</td><td>🇬🇧 Inglés <span class="muted">(Sheila)</span></td><td>⚗️ Física y Química <span class="muted">(Miriam)</span></td><td>💻 Tecnología y Digitalización <span class="muted">(Juanda)</span></td><td>➗ Matemáticas <span class="muted">(José Manuel)</span></td><td>🌍 Geografía e Historia <span class="muted">(Leire)</span></td></tr>
-            <tr><td class="hour">10:35 – 11:30</td><td>✍️ Lengua <span class="muted">(Mª Carmen)</span></td><td>🎨 Plástica <span class="muted">(Ander)</span></td><td>🌐 Euskera <span class="muted">(Iñigo)</span></td><td>⚗️ Física y Química <span class="muted">(Miriam)</span></td><td>➗ Matemáticas <span class="muted">(José Manuel)</span></td></tr>
-            <tr><td class="hour">11:30 – 12:25</td><td>➗ Matemáticas <span class="muted">(José Manuel)</span></td><td>🇬🇧 Inglés <span class="muted">(Sheila)</span></td><td>➗ Matemáticas <span class="muted">(José Manuel)</span></td><td>✝️ Religión <span class="muted">(Antzane)</span></td><td>🌱 Tutoría <span class="muted">(Iñigo)</span></td></tr>
-            <tr><td class="hour">12:40 – 13:35</td><td>🧠 Salud Física y Emociones <span class="muted">(Noelia/Leire)</span></td><td>🎵 Música <span class="muted">(Javier Lekue)</span></td><td>✍️ Lengua <span class="muted">(Mª Carmen)</span></td><td>✍️ Lengua <span class="muted">(Mª Carmen)</span></td><td>🇬🇧 Inglés <span class="muted">(Sheila)</span></td></tr>
-            <tr><td class="hour">13:35 – 14:30</td><td>🌍 Geografía e Historia <span class="muted">(Leire)</span></td><td>💻 Tecnología y Digitalización <span class="muted">(Juanda)</span></td><td>🇬🇧 Inglés GH <span class="muted">(Sheila)</span></td><td>🌟 Valores / Interioridad <span class="muted">(José Manuel)</span></td><td>🌐 Euskera <span class="muted">(Iñigo)</span></td></tr>
+            <tr>
+              <td class="hour">8:30 – 9:25</td>
+              <td>🏃‍♂️ Educación Física <span class="muted">(Noelia)</span></td>
+              <td>🌐 Euskera <span class="muted">(Iñigo)</span></td>
+              <td>🏃‍♀️ Educación Física <span class="muted">(Noelia)</span></td>
+              <td>🧠 Salud Física y Emociones <span class="muted">(Noelia/Leire · P. Crítico)</span></td>
+              <td>✍️ Lengua <span class="muted">(Mª Carmen)</span></td>
+            </tr>
+            <tr>
+              <td class="hour">9:25 – 10:20</td>
+              <td>🇬🇧 Inglés <span class="muted">(Sheila)</span></td>
+              <td>⚗️ Física y Química <span class="muted">(Miriam)</span></td>
+              <td>💻 Tecnología y Digitalización <span class="muted">(Juanda)</span></td>
+              <td>➗ Matemáticas <span class="muted">(José Manuel)</span></td>
+              <td>🌍 Geografía e Historia <span class="muted">(Leire)</span></td>
+            </tr>
+            <tr>
+              <td class="hour">10:35 – 11:30</td>
+              <td>✍️ Lengua <span class="muted">(Mª Carmen)</span></td>
+              <td>🎨 Plástica <span class="muted">(Ander)</span></td>
+              <td>🌐 Euskera <span class="muted">(Iñigo)</span></td>
+              <td>⚗️ Física y Química <span class="muted">(Miriam)</span></td>
+              <td>➗ Matemáticas <span class="muted">(José Manuel)</span></td>
+            </tr>
+            <tr>
+              <td class="hour">11:30 – 12:25</td>
+              <td>➗ Matemáticas <span class="muted">(José Manuel)</span></td>
+              <td>🇬🇧 Inglés <span class="muted">(Sheila)</span></td>
+              <td>➗ Matemáticas <span class="muted">(José Manuel)</span></td>
+              <td>✝️ Religión <span class="muted">(Antzane)</span></td>
+              <td>🌱 Tutoría <span class="muted">(Iñigo)</span></td>
+            </tr>
+            <tr>
+              <td class="hour">12:40 – 13:35</td>
+              <td>🧠 Salud Física y Emociones <span class="muted">(Noelia/Leire)</span></td>
+              <td>🎵 Música <span class="muted">(Javier Lekue)</span></td>
+              <td>✍️ Lengua <span class="muted">(Mª Carmen)</span></td>
+              <td>✍️ Lengua <span class="muted">(Mª Carmen)</span></td>
+              <td>🇬🇧 Inglés <span class="muted">(Sheila)</span></td>
+            </tr>
+            <tr>
+              <td class="hour">13:35 – 14:30</td>
+              <td>🌍 Geografía e Historia <span class="muted">(Leire)</span></td>
+              <td>💻 Tecnología y Digitalización <span class="muted">(Juanda)</span></td>
+              <td>🇬🇧 Inglés GH <span class="muted">(Sheila)</span></td>
+              <td>🌟 Valores / Interioridad <span class="muted">(José Manuel)</span></td>
+              <td>🌐 Euskera <span class="muted">(Iñigo)</span></td>
+            </tr>
           </tbody>
         </table>
         <p class="muted" style="margin-top:.75rem;">*Desliza horizontalmente si no cabe completa en tu móvil.</p>
       </div>
     </section>
 
+    <!-- DEBERES -->
     <section id="deberes">
-      <h2><span>📝 Deberes y Exámenes</span>
+      <h2>
+        <span>📝 Deberes y Exámenes</span>
         <span class="toolbar">
-          <button id="btnNew">➕ Añadir</button>
-          <button id="btnExport">⬇️ Exportar</button>
+          <button id="btnNew" title="Añadir">➕ Añadir</button>
+          <button id="btnExport" title="Exportar">⬇️ Exportar</button>
           <label for="fileImport" class="btn">⬆️ Importar</label>
           <input id="fileImport" type="file" accept="application/json,.json" />
         </span>
       </h2>
       <div id="tasksList"></div>
+
       <dialog id="dlgNew">
         <div class="dlg-head">➕ Nueva tarea / examen</div>
         <form id="formNew" class="dlg-body" method="dialog">
-          <div class="field"><label for="taskText">Tarea *</label><input id="taskText" type="text" placeholder="Ej.: Ejercicios tema 3" required /></div>
-          <div class="field"><label for="taskSubject">Asignatura (opcional)</label><input id="taskSubject" type="text" placeholder="Mates, Lengua, Inglés…" /></div>
-          <div class="field"><label for="taskDate">Fecha límite</label><input id="taskDate" type="date" /></div>
+          <div class="field">
+            <label for="taskText">Tarea *</label>
+            <input id="taskText" type="text" placeholder="Ej.: Ejercicios tema 3" required />
+          </div>
+          <div class="field">
+            <label for="taskSubject">Asignatura (opcional)</label>
+            <input id="taskSubject" type="text" placeholder="Mates, Lengua, Inglés…" />
+          </div>
+          <div class="field">
+            <label for="taskDate">Fecha límite</label>
+            <input id="taskDate" type="date" />
+          </div>
         </form>
-        <div class="dlg-actions"><button class="btn secondary" id="btnCancel">Cancelar</button><button class="btn primary" id="btnCreate">Crear</button></div>
+        <div class="dlg-actions">
+          <button class="btn secondary" id="btnCancel">Cancelar</button>
+          <button class="btn primary" id="btnCreate">Crear</button>
+        </div>
       </dialog>
-      <p class="small">Consejo: usa siempre el mismo nombre de asignatura para mantener el mismo color.</p>
+      <p class="small">Consejo: usa siempre el mismo nombre de asignatura para mantener el mismo color (p. ej., “Mates”, “Lengua”, “Inglés”).</p>
     </section>
 
+    <!-- PROYECTOS -->
     <section id="proyectos">
       <h2>🚀 Proyectos</h2>
       <div class="kanban">
-        <div class="col"><h3>Pendiente</h3><div class="card">📊 Trabajo de Ciencias</div><div class="card">🎭 Teatro escolar</div></div>
-        <div class="col"><h3>En curso</h3><div class="card">📘 Proyecto de Historia</div></div>
-        <div class="col"><h3>Terminado</h3><div class="card">🎨 Lámina de Plástica</div></div>
+        <div class="col">
+          <h3>Pendiente <button id="btnAddTodo" class="add-mini">➕</button></h3>
+          <div id="proj-todo"></div>
+        </div>
+        <div class="col">
+          <h3>En curso <button id="btnAddDoing" class="add-mini">➕</button></h3>
+          <div id="proj-doing"></div>
+        </div>
+        <div class="col">
+          <h3>Terminado <button id="btnAddDone" class="add-mini">➕</button></h3>
+          <div id="proj-done"></div>
+        </div>
       </div>
-      <p class="small">*En próximas versiones podemos hacer proyectos arrastrables (drag & drop) y guardarlos también en el dispositivo.</p>
+      <p class="small">Pulsa ➕ en cada columna para añadir. Toca 🗑️ para eliminar.</p>
     </section>
 
+    <!-- NOTAS -->
     <section id="notas">
-      <h2>💬 Notas rápidas</h2>
-      <div class="note">➗ Examen de mates el viernes</div>
-      <div class="note">👟 Traer chándal el lunes</div>
-      <div class="note">📘 Entregar libro de lectura el martes</div>
+      <h2>💬 Notas rápidas <button id="btnAddNote" class="add-mini">➕</button></h2>
+      <div id="notesWrap"></div>
     </section>
   </main>
+
   <footer>GarreTT 💙</footer>
 </body>
 </html>
